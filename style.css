@@ -4,7 +4,7 @@
 .window {
     width: 400px;
     height: 300px;
-    margin: 20px auto;
+    margin: 20px auto 10px;
     overflow: hidden;
 }
 .images {
@@ -27,4 +27,7 @@
 }
 .images > img.enter {
     transform: translateX(100%);
+}
+.info {
+    text-align: center;
 }
