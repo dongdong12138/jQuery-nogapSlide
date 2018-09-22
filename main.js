@@ -1,59 +1,43 @@
-setTimeout(function () {
-    $('.images > img:first-child').css({
-        transform: 'translateX(-100%)'
+let n
+reset()
+
+setInterval(() => {
+    
+    makeLeave(getImage(n)).one('transitionend', (event) => {
+        makeEnter($(event.currentTarget))
     })
-    $('.images > img:nth-child(2)').css({
-        transform: 'translateX(-100%)'
-    })
-    $('.images > img:first-child').one('transitionend', function (event) {
-        $(event.currentTarget).addClass('right').css({transform: 'none'})
-    })
+    makeCurrent(getImage(n+1))
+    n ++
 }, 2000)
 
-setTimeout(function () {
-    $('.images > img:nth-child(2)').css({
-        transform: 'translateX(-200%)'
-    })
-    $('.images > img:nth-child(3)').css({
-        transform: 'translateX(-100%)'
-    })
-    $('.images > img:nth-child(2)').one('transitionend', function (event) {
-        $(event.currentTarget).addClass('right').css({transform: 'none'})
-    })
-}, 4000)
+function getImage (n) {
+    return $(`.images > img:nth-child(${x(n)})`)
+}
 
-setTimeout(function () {
-    $('.images > img:nth-child(3)').css({
-        transform: 'translateX(-200%)'
-    })
-    $('.images > img:nth-child(4)').css({
-        transform: 'translateX(-100%)'
-    })
-    $('.images > img:nth-child(3)').one('transitionend', function (event) {
-        $(event.currentTarget).addClass('right').css({transform: 'none'})
-    })
-}, 6000)
+function x (n) {
+    if (n > 5) {
+        n = n % 5
+        if (n === 0) {
+            n = 5
+        }
+    }
+    return n
+}
 
-setTimeout(function () {
-    $('.images > img:nth-child(4)').css({
-        transform: 'translateX(-200%)'
-    })
-    $('.images > img:nth-child(5)').css({
-        transform: 'translateX(-100%)'
-    })
-    $('.images > img:nth-child(4)').one('transitionend', function (event) {
-        $(event.currentTarget).addClass('right').css({transform: 'none'})
-    })
-}, 8000)
+function reset () {
+    n = 1
+    $(`.images > img:nth-child(${n}`).addClass('current').siblings().addClass('enter')
+}
 
-setTimeout(function () {
-    $('.images > img:last-child').css({
-        transform: 'translateX(-200%)'
-    })
-    $('.images > img:first-child').css({
-        transform: 'translateX(-100%)'
-    })
-    $('.images > img:last-child').one('transitionend', function (event) {
-        $(event.currentTarget).addClass('right').css({transform: 'none'})
-    })
-}, 8000)
+function makeCurrent ($node) {
+    $node.removeClass('enter leave').addClass('current')
+    return $node
+}
+function makeLeave ($node) {
+    $node.removeClass('enter current').addClass('leave')
+    return $node
+}
+function makeEnter ($node) {
+    $node.removeClass('current leave').addClass('enter')
+    return $node
+}
